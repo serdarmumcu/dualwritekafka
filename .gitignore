@@ -10,6 +10,8 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 
+.mvn/wrapper/maven-wrapper.properties
+
 # Java
 *.class
 *.jar
