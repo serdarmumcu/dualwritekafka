@@ -43,29 +43,3 @@ public class EventPublisherService {
         eventProcessingService.deleteProcessedEvents(eventIdsForDeletion);
     }
 }
-
-
-
-
-
-//public class EventPublisherService {
-//
-//    @Autowired
-//    private OutboxRepository outboxRepository;
-//
-//    @Autowired
-//    private KafkaTemplate<String, String> kafkaTemplate;
-//
-//    @Scheduled(fixedRate = 10000) // Every 10 seconds
-//    public void publishEvents() {
-//        List<Outbox> events = outboxRepository.findAll();
-//        for (Outbox event : events) {
-//            kafkaTemplate.send("messages-topic", event.getPayload()).thenAccept(sendResult -> {
-//                // Handle successful send (e.g., mark the event as published)
-//                outboxRepository.delete(event); // Delete the event record
-//            }).exceptionally(throwable -> {
-//                return null;
-//            });
-//        }
-//    }
-//}

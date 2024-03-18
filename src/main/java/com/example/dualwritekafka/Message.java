@@ -16,5 +16,4 @@ public class Message {
 
     private String content;
 
-    // Constructors, getters, and setters
 }

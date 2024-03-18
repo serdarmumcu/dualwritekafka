@@ -9,9 +9,14 @@ services:
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: mypass
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      DEMO_SIMULATEDELETIONFAILURE: "false" # Simulate deletion failure
+      DEMO_CONSUMERIDEMPOTENCY: "false"
     depends_on:
       - db
       - kafka
+      - redis
 
   db:
     image: postgres:13
@@ -23,6 +28,11 @@ services:
       POSTGRES_PASSWORD: mypass
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
   kafka:
     image: bitnami/kafka:latest
@@ -39,6 +49,8 @@ services:
       KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
       KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
       ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1  # For single-node clusters
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 1  # For single-node clusters
     volumes:
       - kafka_data:/bitnami/kafka
 

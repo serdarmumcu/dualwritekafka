@@ -16,5 +16,4 @@ public class Outbox {
     private String eventType;
     private String payload; // JSON representation of the Message
 
-    // Constructors, getters, and setters
 }
